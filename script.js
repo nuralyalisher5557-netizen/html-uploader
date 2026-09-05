@@ -154,6 +154,23 @@ publishBtn.addEventListener("click", async () => {
         return;
     }
 
-    alert("Проект успешно сохранён в Supabase!");
-    console.log("Опубликовано:", data);
-});
+ const publishedSlug = data[0].slug;
+
+const publicUrl =
+    `https://nuralyalisher5557-netizen.github.io/html-uploader/view.html?s=${publishedSlug}`;
+
+alert(
+    "Сайт успешно опубликован!\n\n" +
+    publicUrl
+);
+
+navigator.clipboard
+    .writeText(publicUrl)
+    .then(() => {
+        console.log("Ссылка скопирована:", publicUrl);
+    })
+    .catch(() => {
+        console.log("Не удалось автоматически скопировать ссылку.");
+    });
+
+window.open(publicUrl, "_blank");

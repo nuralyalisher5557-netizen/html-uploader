@@ -36,7 +36,24 @@ const openPublishedBtn =
 const copyPublishedBtn =
     document.getElementById("copyPublishedBtn");
 
+const htmlNavBtn = document.getElementById("htmlNavBtn");
+const imagesNavBtn = document.getElementById("imagesNavBtn");
+const modelsNavBtn = document.getElementById("modelsNavBtn");
+const audioNavBtn = document.getElementById("audioNavBtn");
 
+const navButtons = [
+    htmlNavBtn,
+    imagesNavBtn,
+    modelsNavBtn,
+    audioNavBtn
+];
+
+navButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        navButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+    });
+});
 
 pasteBtn.addEventListener("click", async () => {
 
@@ -256,7 +273,6 @@ copyImageUrlBtn.onclick = async () => {
 // КНОПКА "ИЗОБРАЖЕНИЯ"
 // ================================
 
-const imagesNavBtn = document.getElementById("imagesNavBtn");
 const imageUploader = document.getElementById("imageUploader");
 
 imagesNavBtn.onclick = () => {
@@ -270,7 +286,6 @@ imagesNavBtn.onclick = () => {
 // АУДИО
 // ==============================
 
-const audioNavBtn = document.getElementById("audioNavBtn");
 const audioUploader = document.getElementById("audioUploader");
 
 const audioFile = document.getElementById("audioFile");
@@ -377,7 +392,6 @@ copyAudioUrlBtn.onclick = async () => {
 // 3D-МОДЕЛИ
 // ==============================
 
-const modelsNavBtn = document.getElementById("modelsNavBtn");
 const modelUploader = document.getElementById("modelUploader");
 
 const modelFile = document.getElementById("modelFile");

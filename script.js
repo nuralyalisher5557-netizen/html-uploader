@@ -18,6 +18,8 @@ const downloadBtn =
 const publishBtn =
     document.getElementById("publishBtn");
 
+const projectTitle = document.getElementById("projectTitle");    
+
 const previewSection =
     document.getElementById("previewSection");
 
@@ -138,6 +140,13 @@ downloadBtn.addEventListener("click", () => {
 
 
 publishBtn.addEventListener("click", async () => {
+    const title = projectTitle.value.trim();
+
+if (!title) {
+    alert("Введите название проекта.");
+    projectTitle.focus();
+    return;
+}
     const code = htmlCode.value.trim();
 
     if (!code) {
@@ -153,7 +162,7 @@ publishBtn.addEventListener("click", async () => {
         .from("projects")
         .insert([
             {
-                title: "HTML проект",
+                title: title,
                 html_code: code,
                 slug: slug
             }

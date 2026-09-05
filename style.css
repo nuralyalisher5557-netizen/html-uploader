@@ -291,3 +291,36 @@ iframe {
     }
 
 }
+.project-name-box {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.project-name-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.project-name-box input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(10, 15, 35, 0.65);
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.project-name-box input:focus {
+    border-color: #6c7cff;
+    box-shadow: 0 0 0 3px rgba(108, 124, 255, 0.15);
+}
+
+.project-name-box input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}

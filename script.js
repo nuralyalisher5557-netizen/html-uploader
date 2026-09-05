@@ -174,3 +174,4 @@ navigator.clipboard
     });
 
 window.open(publicUrl, "_blank");
+});

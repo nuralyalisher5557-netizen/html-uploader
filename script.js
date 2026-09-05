@@ -274,3 +274,107 @@ imagesNavBtn.onclick = () => {
         block: "start"
     });
 };
+// ==============================
+// АУДИО
+// ==============================
+
+const audioNavBtn = document.getElementById("audioNavBtn");
+const audioUploader = document.getElementById("audioUploader");
+
+const audioFile = document.getElementById("audioFile");
+const uploadAudioBtn = document.getElementById("uploadAudioBtn");
+const audioUploadStatus = document.getElementById("audioUploadStatus");
+
+const audioResult = document.getElementById("audioResult");
+const audioUrl = document.getElementById("audioUrl");
+const audioPlayer = document.getElementById("audioPlayer");
+const copyAudioUrlBtn = document.getElementById("copyAudioUrlBtn");
+
+
+// Открываем раздел "Аудио"
+audioNavBtn.onclick = () => {
+
+    audioUploader.style.display = "block";
+
+    audioUploader.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+};
+
+
+// ЗАГРУЗКА АУДИО В SUPABASE
+uploadAudioBtn.onclick = async () => {
+
+    const file = audioFile.files[0];
+
+    if (!file) {
+        audioUploadStatus.textContent =
+            "❌ Сначала выберите аудиофайл";
+        return;
+    }
+
+    audioUploadStatus.textContent =
+        "⏳ Загружаем аудио...";
+
+    const fileName =
+        Date.now() + "-" +
+        Math.random().toString(36).substring(2, 8) +
+        "-" +
+        file.name.replace(/\s+/g, "_");
+
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("audio")
+        .upload(fileName, file);
+
+
+    if (error) {
+
+        console.error(error);
+
+        audioUploadStatus.textContent =
+            "❌ Ошибка загрузки: " + error.message;
+
+        return;
+    }
+
+
+    const { data: publicData } = supabaseClient
+        .storage
+        .from("audio")
+        .getPublicUrl(fileName);
+
+
+    const publicUrl = publicData.publicUrl;
+
+
+    audioUrl.value = publicUrl;
+
+    audioPlayer.src = publicUrl;
+
+    audioResult.style.display = "block";
+
+    audioUploadStatus.textContent =
+        "✅ Аудио успешно загружено!";
+};
+
+
+// КОПИРОВАНИЕ ССЫЛКИ
+copyAudioUrlBtn.onclick = async () => {
+
+    await navigator.clipboard.writeText(
+        audioUrl.value
+    );
+
+    copyAudioUrlBtn.textContent =
+        "✅ Ссылка скопирована";
+
+    setTimeout(() => {
+
+        copyAudioUrlBtn.textContent =
+            "📋 Копировать ссылку";
+
+    }, 2000);
+};

@@ -34,9 +34,9 @@
             3D-модели
         </button>
 
-        <button class="nav-button">
-            Аудио
-        </button>
+  <button class="nav-button" id="audioNavBtn">
+    🎵 Аудио
+</button>
 
     </nav>
 
@@ -141,7 +141,40 @@
     </div>
 
 </div>
+<div id="audioUploader" style="display:none; margin-top:30px;">
 
+    <h2>🎵 Загрузчик аудио</h2>
+    <p>Загрузите аудиофайл и получите готовую ссылку</p>
+
+    <input
+        type="file"
+        id="audioFile"
+        accept="audio/*"
+    >
+
+    <button id="uploadAudioBtn">
+        ⬆ Загрузить аудио
+    </button>
+
+    <p id="audioUploadStatus"></p>
+
+    <div id="audioResult" style="display:none;">
+        <h3>✅ Аудио загружено</h3>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <input
+            type="text"
+            id="audioUrl"
+            readonly
+        >
+
+        <button id="copyAudioUrlBtn">
+            📋 Копировать ссылку
+        </button>
+    </div>
+
+</div>
     <div
         id="previewSection"
         class="preview-section"

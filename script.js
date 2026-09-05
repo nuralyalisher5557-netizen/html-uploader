@@ -1,3 +1,8 @@
+const SUPABASE_URL = "https://gwbeexfmcvoiduimbzai.supabase.co";
+const SUPABASE_KEY = "sb_publishable_iBAblEIPsL3n2rj4X4oW_Q_O8FplVee";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const htmlCode =
     document.getElementById("htmlCode");
 
@@ -120,23 +125,35 @@ downloadBtn.addEventListener("click", () => {
 
 
 
-publishBtn.addEventListener("click", () => {
-
-    const code =
-        htmlCode.value.trim();
+publishBtn.addEventListener("click", async () => {
+    const code = htmlCode.value.trim();
 
     if (!code) {
-
-        alert(
-            "Сначала вставьте HTML-код."
-        );
-
+        alert("Сначала вставьте HTML-код.");
         return;
-
     }
 
-    alert(
-        "Следующим шагом подключим настоящую публикацию в интернет."
-    );
+    const slug =
+        Date.now().toString(36) +
+        Math.random().toString(36).substring(2, 8);
 
+    const { data, error } = await supabaseClient
+        .from("projects")
+        .insert([
+            {
+                title: "HTML проект",
+                html_code: code,
+                slug: slug
+            }
+        ])
+        .select();
+
+    if (error) {
+        console.error(error);
+        alert("Ошибка публикации: " + error.message);
+        return;
+    }
+
+    alert("Проект успешно сохранён в Supabase!");
+    console.log("Опубликовано:", data);
 });

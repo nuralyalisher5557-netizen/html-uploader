@@ -261,7 +261,7 @@ const imageUrl = document.getElementById("imageUrl");
 const copyImageUrlBtn = document.getElementById("copyImageUrlBtn");
 
 uploadImageBtn.onclick = async () => {
-
+    if (!(await verifyTurnstile())) return;
    const file = imageFile.files[0];
 
 if (!file) {
@@ -368,7 +368,7 @@ audioNavBtn.onclick = () => {
 
 // ЗАГРУЗКА АУДИО В SUPABASE
 uploadAudioBtn.onclick = async () => {
-
+    if (!(await verifyTurnstile())) return;
     const file = audioFile.files[0];
 
 
@@ -481,7 +481,7 @@ modelsNavBtn.onclick = () => {
 
 // Загрузка 3D-модели
 uploadModelBtn.onclick = async () => {
-
+    if (!(await verifyTurnstile())) return;
     const file = modelFile.files[0];
 
     if (!file) {

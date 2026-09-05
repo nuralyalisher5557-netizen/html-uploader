@@ -317,11 +317,12 @@ uploadAudioBtn.onclick = async () => {
     audioUploadStatus.textContent =
         "⏳ Загружаем аудио...";
 
-    const fileName =
-        Date.now() + "-" +
-        Math.random().toString(36).substring(2, 8) +
-        "-" +
-        file.name.replace(/\s+/g, "_");
+  const extension = file.name.split(".").pop().toLowerCase();
+
+const fileName =
+    Date.now() + "-" +
+    Math.random().toString(36).substring(2, 8) +
+    "." + extension;
 
 
     const { data, error } = await supabaseClient

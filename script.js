@@ -192,3 +192,85 @@ copyPublishedBtn.onclick = async () => {
 };
 
 });
+
+// ================================
+// ЗАГРУЗКА ИЗОБРАЖЕНИЙ
+// ================================
+
+const imageFile = document.getElementById("imageFile");
+const uploadImageBtn = document.getElementById("uploadImageBtn");
+const imageUploadStatus = document.getElementById("imageUploadStatus");
+const imageResult = document.getElementById("imageResult");
+const imageUrl = document.getElementById("imageUrl");
+const copyImageUrlBtn = document.getElementById("copyImageUrlBtn");
+
+uploadImageBtn.onclick = async () => {
+
+    const file = imageFile.files[0];
+
+    if (!file) {
+        alert("Выберите изображение");
+        return;
+    }
+
+    imageUploadStatus.textContent = "⏳ Загружаем изображение...";
+
+    const fileExt = file.name.split(".").pop();
+    const fileName =
+        Date.now() + "-" +
+        Math.random().toString(36).substring(2) +
+        "." + fileExt;
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("images")
+        .upload(fileName, file);
+
+    if (error) {
+        console.error(error);
+        imageUploadStatus.textContent =
+            "❌ Ошибка: " + error.message;
+        return;
+    }
+
+    const { data: publicData } = supabaseClient
+        .storage
+        .from("images")
+        .getPublicUrl(fileName);
+
+    const publicUrl = publicData.publicUrl;
+
+    imageUrl.value = publicUrl;
+    imageResult.style.display = "block";
+
+    imageUploadStatus.textContent =
+        "✅ Изображение успешно загружено!";
+};
+
+copyImageUrlBtn.onclick = async () => {
+
+    await navigator.clipboard.writeText(imageUrl.value);
+
+    copyImageUrlBtn.textContent =
+        "✅ Ссылка скопирована";
+
+    setTimeout(() => {
+        copyImageUrlBtn.textContent =
+            "📋 Копировать ссылку";
+    }, 2000);
+};
+
+// ================================
+// КНОПКА "ИЗОБРАЖЕНИЯ"
+// ================================
+
+const imagesNavBtn = document.getElementById("imagesNavBtn");
+const imageUploader = document.getElementById("imageUploader");
+
+imagesNavBtn.onclick = () => {
+    imageUploader.style.display = "block";
+    imageUploader.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+};

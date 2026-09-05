@@ -26,9 +26,9 @@
             HTML Загрузчик
         </button>
 
-        <button class="nav-button">
-            Изображения
-        </button>
+  <button class="nav-button" id="imagesNavBtn">
+    🖼️ Изображения
+</button>
 
         <button class="nav-button">
             3D-модели
@@ -55,7 +55,7 @@
     <p class="subtitle">
         Вставьте HTML-код и создайте готовый файл
     </p>
-    
+
 <div class="project-name-box">
     <label for="projectTitle">Название проекта</label>
     <input
@@ -108,7 +108,39 @@
     </div>
 </div>
 
+<div id="imageUploader" style="display:none; margin-top:30px;">
 
+    <h2>🖼️ Загрузчик изображений</h2>
+
+    <p>Загрузите изображение и получите готовую ссылку</p>
+
+    <input
+        type="file"
+        id="imageFile"
+        accept="image/*"
+    >
+
+    <button id="uploadImageBtn">
+        ⬆ Загрузить изображение
+    </button>
+
+    <p id="imageUploadStatus"></p>
+
+    <div id="imageResult" style="display:none;">
+        <h3>✅ Изображение загружено</h3>
+
+        <input
+            type="text"
+            id="imageUrl"
+            readonly
+        >
+
+        <button id="copyImageUrlBtn">
+            📋 Копировать ссылку
+        </button>
+    </div>
+
+</div>
 
     <div
         id="previewSection"

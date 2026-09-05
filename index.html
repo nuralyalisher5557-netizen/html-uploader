@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HTML Загрузчик</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<header class="topbar">
+
+    <div class="author">
+        Автор: <span>Ваше имя</span>
+    </div>
+
+
+    <nav>
+
+        <button class="nav-button active">
+            HTML Загрузчик
+        </button>
+
+        <button class="nav-button">
+            Изображения
+        </button>
+
+        <button class="nav-button">
+            3D-модели
+        </button>
+
+        <button class="nav-button">
+            Аудио
+        </button>
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+<section class="card">
+
+    <h1>
+        HTML Загрузчик
+    </h1>
+
+    <p class="subtitle">
+        Вставьте HTML-код и создайте готовый файл
+    </p>
+
+
+    <div class="editor-box">
+
+        <button
+            id="pasteBtn"
+            class="paste-button"
+        >
+            📋 Вставить
+        </button>
+
+
+        <textarea
+            id="htmlCode"
+            placeholder="Вставьте ваш HTML код сюда..."
+        ></textarea>
+
+    </div>
+
+
+
+    <div class="buttons">
+
+        <button id="previewBtn">
+            👁 Предпросмотр
+        </button>
+
+
+        <button id="downloadBtn">
+            ⬇ Скачать HTML
+        </button>
+
+
+        <button
+            id="publishBtn"
+            class="publish"
+        >
+            ☁ Опубликовать
+        </button>
+
+    </div>
+
+
+
+    <div
+        id="previewSection"
+        class="preview-section"
+    >
+
+        <h2>
+            Предпросмотр
+        </h2>
+
+
+        <iframe
+            id="previewFrame"
+            sandbox="allow-scripts"
+        ></iframe>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

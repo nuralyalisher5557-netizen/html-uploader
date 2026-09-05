@@ -30,7 +30,7 @@
     🖼️ Изображения
 </button>
 
-        <button class="nav-button">
+        <button class="nav-button" id="modelsNavBtn">
             3D-модели
         </button>
 
@@ -170,6 +170,40 @@
         >
 
         <button id="copyAudioUrlBtn">
+            📋 Копировать ссылку
+        </button>
+    </div>
+
+</div>
+
+<!-- ЗАГРУЗЧИК 3D-МОДЕЛЕЙ -->
+<div id="modelUploader" style="display:none; margin-top:30px;">
+
+    <h2>🧊 Загрузчик 3D-моделей</h2>
+    <p>Загрузите 3D-модель и получите готовую ссылку</p>
+
+    <input
+        type="file"
+        id="modelFile"
+        accept=".glb,.gltf,.obj,.fbx,.stl"
+    >
+
+    <button id="uploadModelBtn">
+        ⬆ Загрузить 3D-модель
+    </button>
+
+    <p id="modelUploadStatus"></p>
+
+    <div id="modelResult" style="display:none;">
+        <h3>✅ 3D-модель загружена</h3>
+
+        <input
+            type="text"
+            id="modelUrl"
+            readonly
+        >
+
+        <button id="copyModelUrlBtn">
             📋 Копировать ссылку
         </button>
     </div>

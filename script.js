@@ -381,3 +381,100 @@ copyAudioUrlBtn.onclick = async () => {
 
     }, 2000);
 };
+// ==============================
+// 3D-МОДЕЛИ
+// ==============================
+
+const modelsNavBtn = document.getElementById("modelsNavBtn");
+const modelUploader = document.getElementById("modelUploader");
+
+const modelFile = document.getElementById("modelFile");
+const uploadModelBtn = document.getElementById("uploadModelBtn");
+const modelUploadStatus = document.getElementById("modelUploadStatus");
+
+const modelResult = document.getElementById("modelResult");
+const modelUrl = document.getElementById("modelUrl");
+const copyModelUrlBtn = document.getElementById("copyModelUrlBtn");
+
+// Открываем раздел 3D-моделей
+modelsNavBtn.onclick = () => {
+
+    modelUploader.style.display = "block";
+
+    modelUploader.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+};
+
+// Загрузка 3D-модели
+uploadModelBtn.onclick = async () => {
+
+    const file = modelFile.files[0];
+
+    if (!file) {
+        modelUploadStatus.textContent =
+            "❌ Сначала выберите файл 3D-модели";
+        return;
+    }
+
+    modelUploadStatus.textContent =
+        "⏳ Загружаем 3D-модель...";
+
+    const extension =
+        file.name.split(".").pop().toLowerCase();
+
+    const fileName =
+        Date.now() + "-" +
+        Math.random().toString(36).substring(2, 8) +
+        "." + extension;
+
+    console.log("НОВОЕ ИМЯ 3D:", fileName);
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("models")
+        .upload(fileName, file);
+
+    if (error) {
+
+        console.error(error);
+
+        modelUploadStatus.textContent =
+            "❌ Ошибка загрузки: " + error.message;
+
+        return;
+    }
+
+    const { data: publicData } = supabaseClient
+        .storage
+        .from("models")
+        .getPublicUrl(fileName);
+
+    const publicUrl = publicData.publicUrl;
+
+    modelUrl.value = publicUrl;
+
+    modelResult.style.display = "block";
+
+    modelUploadStatus.textContent =
+        "✅ 3D-модель успешно загружена!";
+};
+
+// Копирование ссылки
+copyModelUrlBtn.onclick = async () => {
+
+    await navigator.clipboard.writeText(
+        modelUrl.value
+    );
+
+    copyModelUrlBtn.textContent =
+        "✅ Ссылка скопирована";
+
+    setTimeout(() => {
+
+        copyModelUrlBtn.textContent =
+            "📋 Копировать ссылку";
+
+    }, 2000);
+};

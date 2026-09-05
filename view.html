@@ -66,9 +66,27 @@ async function loadProject() {
         return;
     }
 
-    document.open();
-    document.write(data.html_code);
-    document.close();
+const iframe = document.createElement("iframe");
+
+iframe.style.position = "fixed";
+iframe.style.inset = "0";
+iframe.style.width = "100%";
+iframe.style.height = "100%";
+iframe.style.border = "none";
+iframe.style.background = "#ffffff";
+
+iframe.setAttribute(
+    "sandbox",
+    "allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-downloads"
+);
+
+iframe.setAttribute("allow", "fullscreen");
+iframe.allowFullscreen = true;
+
+iframe.srcdoc = data.html_code;
+
+document.body.innerHTML = "";
+document.body.appendChild(iframe);
 }
 
 loadProject();

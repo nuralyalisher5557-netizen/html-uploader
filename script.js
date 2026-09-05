@@ -371,7 +371,6 @@ uploadAudioBtn.onclick = async () => {
 
     const file = audioFile.files[0];
 
-    const file = audioFile.files[0];
 
 if (!file) {
     audioUploadStatus.textContent =

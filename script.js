@@ -38,11 +38,23 @@ async function verifyTurnstile() {
         const result = await response.json();
 
         if (!response.ok || result.success !== true) {
-            alert("Проверка безопасности не пройдена. Попробуйте ещё раз.");
-            return false;
-        }
+    turnstileToken = "";
 
-        return true;
+    if (window.turnstile) {
+        turnstile.reset();
+    }
+
+    alert("Проверка безопасности не пройдена. Попробуйте ещё раз.");
+    return false;
+}
+
+turnstileToken = "";
+
+if (window.turnstile) {
+    turnstile.reset();
+}
+
+return true;
     } catch (error) {
         console.error("Turnstile error:", error);
         alert("Не удалось выполнить проверку безопасности.");

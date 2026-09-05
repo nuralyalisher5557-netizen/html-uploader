@@ -8,6 +8,8 @@
     <title>HTML Загрузчик</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 
@@ -55,6 +57,14 @@
 
 
 <main>
+    <div id="turnstileBox">
+    <div
+        class="cf-turnstile"
+        data-sitekey="0x4AAAAAAEpj6BPvq1_Inue4"
+        data-callback="turnstileSuccess"
+        data-expired-callback="turnstileExpired">
+    </div>
+</div>
 
 <section class="card">
 

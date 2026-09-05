@@ -3,6 +3,52 @@ const SUPABASE_KEY = "sb_publishable_iBAblEIPsL3n2rj4X4oW_Q_O8FplVee";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// ===== CLOUDFLARE TURNSTILE =====
+let turnstileToken = "";
+
+function turnstileSuccess(token) {
+    turnstileToken = token;
+    console.log("Turnstile: проверка пройдена");
+}
+
+function turnstileExpired() {
+    turnstileToken = "";
+    console.log("Turnstile: срок проверки истёк");
+}
+async function verifyTurnstile() {
+    if (!turnstileToken) {
+        alert("Пожалуйста, пройдите проверку безопасности.");
+        return false;
+    }
+
+    try {
+        const response = await fetch(
+            `${SUPABASE_URL}/functions/v1/verify-turnstile`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token: turnstileToken
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || result.success !== true) {
+            alert("Проверка безопасности не пройдена. Попробуйте ещё раз.");
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Turnstile error:", error);
+        alert("Не удалось выполнить проверку безопасности.");
+        return false;
+    }
+}
 const htmlCode =
     document.getElementById("htmlCode");
 
@@ -155,6 +201,7 @@ downloadBtn.addEventListener("click", () => {
 
 
 publishBtn.addEventListener("click", async () => {
+    if (!(await verifyTurnstile())) return;
    
     const code = htmlCode.value.trim();
 
@@ -215,12 +262,21 @@ const copyImageUrlBtn = document.getElementById("copyImageUrlBtn");
 
 uploadImageBtn.onclick = async () => {
 
-    const file = imageFile.files[0];
+   const file = imageFile.files[0];
 
-    if (!file) {
-        alert("Выберите изображение");
-        return;
-    }
+if (!file) {
+    alert("Выберите изображение");
+    return;
+}
+
+// Максимальный размер изображения — 5 МБ
+const maxImageSize = 5 * 1024 * 1024;
+
+if (file.size > maxImageSize) {
+    imageUploadStatus.textContent =
+        "❌ Файл слишком большой. Максимальный размер изображения — 5 МБ.";
+    return;
+}
 
     imageUploadStatus.textContent = "⏳ Загружаем изображение...";
 
@@ -315,14 +371,25 @@ uploadAudioBtn.onclick = async () => {
 
     const file = audioFile.files[0];
 
-    if (!file) {
-        audioUploadStatus.textContent =
-            "❌ Сначала выберите аудиофайл";
-        return;
-    }
+    const file = audioFile.files[0];
 
+if (!file) {
     audioUploadStatus.textContent =
-        "⏳ Загружаем аудио...";
+        "❌ Сначала выберите аудиофайл";
+    return;
+}
+
+// Максимальный размер аудио — 10 МБ
+const maxAudioSize = 10 * 1024 * 1024;
+
+if (file.size > maxAudioSize) {
+    audioUploadStatus.textContent =
+        "❌ Файл слишком большой. Максимальный размер аудио — 10 МБ.";
+    return;
+}
+
+audioUploadStatus.textContent =
+    "⌛ Загружаем аудио...";
 
 const extension = file.name.split(".").pop().toLowerCase();
 
@@ -424,8 +491,17 @@ uploadModelBtn.onclick = async () => {
         return;
     }
 
+    // Максимальный размер 3D-модели — 20 МБ
+    const maxModelSize = 20 * 1024 * 1024;
+
+    if (file.size > maxModelSize) {
+        modelUploadStatus.textContent =
+            "❌ Файл слишком большой. Максимальный размер 3D-модели — 20 МБ.";
+        return;
+    }
+
     modelUploadStatus.textContent =
-        "⏳ Загружаем 3D-модель...";
+        "⌛ Загружаем 3D-модель...";
 
     const extension =
         file.name.split(".").pop().toLowerCase();

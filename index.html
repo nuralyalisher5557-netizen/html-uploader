@@ -76,26 +76,25 @@
 
 
 
-    <div class="buttons">
+    <div id="publishResult" class="publish-result" style="display: none;">
+    <h3>✅ Сайт опубликован!</h3>
 
-        <button id="previewBtn">
-            👁 Предпросмотр
+    <input
+        id="publishedUrl"
+        type="text"
+        readonly
+    >
+
+    <div class="publish-actions">
+        <button id="openPublishedBtn">
+            🌐 Открыть сайт
         </button>
 
-
-        <button id="downloadBtn">
-            ⬇ Скачать HTML
+        <button id="copyPublishedBtn">
+            📋 Скопировать ссылку
         </button>
-
-
-        <button
-            id="publishBtn"
-            class="publish"
-        >
-            ☁ Опубликовать
-        </button>
-
     </div>
+</div>
 
 
 

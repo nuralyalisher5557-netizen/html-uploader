@@ -23,6 +23,18 @@ const previewSection =
 
 const previewFrame =
     document.getElementById("previewFrame");
+    
+const publishResult =
+    document.getElementById("publishResult");
+
+const publishedUrl =
+    document.getElementById("publishedUrl");
+
+const openPublishedBtn =
+    document.getElementById("openPublishedBtn");
+
+const copyPublishedBtn =
+    document.getElementById("copyPublishedBtn");
 
 
 
@@ -158,21 +170,16 @@ publishBtn.addEventListener("click", async () => {
 
 const publicUrl =
     `https://nuralyalisher5557-netizen.github.io/html-uploader/view.html?s=${publishedSlug}`;
+publishResult.style.display = "block";
+publishedUrl.value = publicUrl;
 
-alert(
-    "Сайт успешно опубликован!\n\n" +
-    publicUrl
-);
+openPublishedBtn.onclick = () => {
+    window.open(publicUrl, "_blank");
+};
 
-navigator.clipboard
-    .writeText(publicUrl)
-    .then(() => {
-        console.log("Ссылка скопирована:", publicUrl);
-    })
-    .catch(() => {
-        console.log("Не удалось автоматически скопировать ссылку.");
-    });
-
-window.open(publicUrl, "_blank");
+copyPublishedBtn.onclick = async () => {
+    await navigator.clipboard.writeText(publicUrl);
+    copyPublishedBtn.textContent = "✅ Ссылка скопирована";
+};
 
 });
